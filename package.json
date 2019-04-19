@@ -1,0 +1,25 @@
+{
+    "name": "hsp-syntax-highlight",
+    "displayName": "hsp_syntax_highlight",
+    "description": "Enables syntax highlights for HSP3 on VS Code.",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.33.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "hsp",
+            "aliases": ["HSP", "hsp"],
+            "extensions": [".hsp"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "hsp",
+            "scopeName": "source.hsp",
+            "path": "./syntaxes/hsp.tmLanguage.json"
+        }]
+    }
+}
