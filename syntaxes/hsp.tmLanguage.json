@@ -5,8 +5,8 @@
         {
             "include": "#preprocessors"
         },
-		{
-			"include": "#keywords"
+        {
+            "include": "#keywords"
         },
         {
             "include": "#types"
