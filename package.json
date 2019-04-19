@@ -1,4 +1,5 @@
 {
+    "publisher": "Monotrea",
     "name": "hsp-syntax-highlight",
     "displayName": "hsp_syntax_highlight",
     "description": "Enables syntax highlights for HSP3 on VS Code.",
