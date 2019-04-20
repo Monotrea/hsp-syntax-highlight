@@ -3,23 +3,28 @@
 ## Features
 
 This is a syntax-highlight extension for HSP.
+It is under construction...
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+Just install this extension.
 
 ## Extension Settings
 
+None.
+
 ## Known Issues
+
+Unable to give you appropriate syntax highlights...
+For Example,
+- Comments
+- Functions
+- Variables
+- etc...
 
 ## Release Notes
 
-### 1.0.0
+### 0.01
 
-Initial release of this extension.
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+Not released.
 
