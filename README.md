@@ -2,7 +2,7 @@
 
 ## Features
 
-This is a syntax-highlight extension for HSP.
+This is a syntax-highlight extension for HSP.  
 It is under construction...
 
 ## Requirements
@@ -15,12 +15,10 @@ None.
 
 ## Known Issues
 
-Unable to give you appropriate syntax highlights...
-For Example,
-- Comments
-- Functions
-- Variables
-- etc...
+Unable to give you appropriate syntax highlights...  
+For Example,  
+- `/* Comments */` highlight not work well  
+- `:` for multistatement works, but `:` in strings doesn't work.
 
 ## Release Notes
 

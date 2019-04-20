@@ -11,19 +11,7 @@
                     "include": "#comments"
                 },
                 {
-                    "include": "#preprocessors"
-                },
-                {
-                    "include": "#keywords"
-                },
-                {
-                    "include": "#types"
-                },
-                {
                     "include": "#statement"
-                },
-                {
-                    "include": "#labels"
                 }
             ],
             "repository": {
@@ -55,44 +43,121 @@
                             "include": "#comments"
                         },
                         {
-                            "include": "#multistatement"
+                            "include": "#strings"
                         },
                         {
-                            "include": "#singlestatement"
+                            "include": "#multistatement"
                         }
                     ],
                     "repository": {
-                        "singlestatement": {
+                        "multistatement_nest": {
                             "patterns": [
                                 {
-                                    "name": "support.function",
-                                    "match": "\\b:\\b\\s*\\w+"
+                                    "include": "#comments"
                                 },
                                 {
-                                    "name": "support.function",
-                                    "match": "\\b\\w+\\b"
+                                    "include": "#strings"
+                                },
+                                {
+                                    "match": "\\s*(\\S+?)(\\s+?.*?)??(\\s*:.*)??$",
+                                    "captures": {
+                                        "1": { "patterns": [
+                                            {"include": "#comments"},
+                                            {"include": "#labels"},
+                                            {"include": "#preprocessors"},
+                                            {"include": "#types"},
+                                            {"include": "#keywords"},
+                                            {"include": "#strings"},
+                                            {"include": "#otherpatterns"}
+                                        ]},
+                                        "2": { "patterns": [
+                                            {"include": "#labels"},
+                                            {"include": "#keywords"},
+                                            {"include": "#parameters"}
+                                        ]},
+                                        "3": {"patterns": [{"include": "#multistatement_nest"}]}
+                                    }
+                                },
+                                {
+                                    "match": "\\s*(\\S+?)(\\s+?.*?)??$",
+                                    "captures": {
+                                        "1": { "patterns": [
+                                            {"include": "#comments"},
+                                            {"include": "#labels"},
+                                            {"include": "#preprocessors"},
+                                            {"include": "#types"},
+                                            {"include": "#keywords"},
+                                            {"include": "#strings"},
+                                            {"include": "#otherpatterns"}
+                                        ]},
+                                        "2": { "patterns": [
+                                            {"include": "#labels"},
+                                            {"include": "#keywords"},
+                                            {"include": "#parameters"}
+                                        ]}
+                                    }
                                 }
                             ]
                         },
                         "multistatement": {
                             "patterns": [
                                 {
-                                    "match": "\\b:\\b\\s*(\\w+)\\s+(\\S+)",
+                                    "match": "\\s*(\\S+?)(\\s+?.*?)??\\s*:(.*)??$",
                                     "captures": {
-                                        "1": { "patterns": [{"name": "support.function"}] },
-                                        "2": { "patterns": [{"include": "#parameters"}, {"include": "#comments"}] }
+                                        "1": { "patterns": [
+                                            {"include": "#comments"},
+                                            {"include": "#labels"},
+                                            {"include": "#preprocessors"},
+                                            {"include": "#types"},
+                                            {"include": "#keywords"},
+                                            {"include": "#strings"},
+                                            {"include": "#otherpatterns"}
+                                        ]},
+                                        "2": { "patterns": [
+                                            {"include": "#labels"},
+                                            {"include": "#keywords"},
+                                            {"include": "#parameters"}
+                                        ]},
+                                        "3": {"patterns": [{"include": "#multistatement_nest"}]}
                                     }
                                 },
                                 {
-                                    "match": "\\<(\\w+)\\s+(\\S+)",
+                                    "match": "\\s*(\\S+?)(\\s+?.*?)??\\s*$",
                                     "captures": {
-                                        "1": { "patterns": [{"name": "support.function"}] },
-                                        "2": { "patterns": [{"include": "#parameters"}, {"include": "#comments"}] }
+                                        "1": { "patterns": [
+                                            {"include": "#comments"},
+                                            {"include": "#labels"},
+                                            {"include": "#preprocessors"},
+                                            {"include": "#types"},
+                                            {"include": "#keywords"},
+                                            {"include": "#strings"},
+                                            {"include": "#otherpatterns"}
+                                        ]},
+                                        "2": { "patterns": [
+                                            {"include": "#labels"},
+                                            {"include": "#keywords"},
+                                            {"include": "#parameters"}
+                                        ]},
+                                        "3": {"patterns": [{"include": "#multistatement_nest"}]}
                                     }
                                 }
                             ]
+                        },
+                        "otherpatterns": {
+                            "patterns": [
+                                {"match": "\\b[a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff][0-9a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff]*\\b", "name": "entity.name.function"}
+                            ]
                         }
                     }
+                },
+                "strings": {
+                    "patterns":[
+                        {
+                            "name": "string.quoted.double.hsp",
+                            "begin": "\"",
+                            "end": "\""
+                        }
+                    ]
                 },
                 "parameters": {
                     "patterns": [
@@ -115,17 +180,6 @@
                                 }
                             ]
                         },
-                        "strings": {
-                            "name": "string.quoted.double.hsp",
-                            "begin": "\"",
-                            "end": "\"",
-                            "patterns": [
-                                {
-                                    "name": "constant.character.escape.hsp",
-                                    "match": "\\\\."
-                                }
-                            ]
-                        },
                         "variables": {
                             "patterns": [
                                 {
@@ -139,9 +193,22 @@
                 "labels": {
                     "patterns": [
                         {
-                            "name": "entity.name.class",
-                            "match": "\\*\\w+\\b"
+                            "match": "^\\s*?(\\*\\w+)\\b",
+                            "captures": {
+                                "1": {"name": "entity.name.class.hsp"}
+                            }
+                        },
+                        {
+                            "match": "\\b(goto|gosub)\\s+(\\*\\w+)\\b",
+                            "captures": {
+                                "1": {"name": "keyword.control.hsp"},
+                                "2": {"name": "entity.name.class.hsp"}
+                            }
                         }
+                    ]
+                },
+                "defined_statements": {
+                    "patterns": [
                     ]
                 },
                 "comments":{
@@ -160,16 +227,22 @@
                         "semicoloncomment": {
                             "patterns": [
                                 {
-                                    "name": "comment.line",
-                                    "match": ";.*"
+                                    "match": "^(.*)(;.*)$",
+                                    "captures": {
+                                        "1": { "patterns": [{"include": "#code"}]},
+                                        "2": { "name": "comment.line"}
+                                    }
                                 }
                             ]
                         },
                         "doubleslashcomment": {
                             "patterns": [
                                 {
-                                    "name": "comment.line.double-slash",
-                                    "match": "//.*"
+                                    "match": "^(.*)(//.*)$",
+                                    "captures": {
+                                        "1": { "patterns": [{"include": "#code"}]},
+                                        "2": { "name": "comment.line.double-slash"}
+                                    }
                                 }
                             ]
                         },
