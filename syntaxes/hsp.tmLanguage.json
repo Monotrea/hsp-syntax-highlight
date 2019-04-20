@@ -1,194 +1,20 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "HSP",
-	"patterns": [
-        {
-            "include": "#preprocessors"
-        },
-        {
-            "include": "#keywords"
-        },
-        {
-            "include": "#types"
-        },
-        {
-            "include": "#statements"
-        },
-        {
-            "include": "#parameters"
-        },
-        {
-            "include": "#labels"
-        },
-        {
-            "include": "#comments"
-        }
-	],
-	"repository": {
-        "preprocessors": {
+    "name": "HSP",
+    "patterns": [
+        { "include": "#comments"},
+        { "include": "#code" }
+    ],
+    "repository": {
+        "colons": {
             "patterns": [
+                { "include": "#comments" },
                 {
-                    "name": "meta.preprocessor",
-                    "match": "\\#(include|define|const|ifdef|if|else|endif)"
-                }
-            ]
-        },
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.hsp",
-				"match": "\\b(if|else|while|for|return|repeat|loop|goto|gosub)\\b"
-			}]
-        },
-        "types": {
-            "patterns": [
-                {
-                    "name": "support.type.hsp",
-                    "match": "\\b(int|str)\\b"
-                }
-            ]
-        },
-        "statements": {
-            "patterns": [
-                {"include": "#screencontrols"},
-                {"include": "#drawfunctions"},
-                {"include": "#objectcontrols"},
-                {"include": "#fileoperations"},
-                {"include": "#stringoperations"},
-                {"include": "#programcontrols"},
-                {"include": "#memoryhandling"},
-                {"include": "#multimediacontrols"},
-                {"include": "#stdiocontrols"},
-                {"include": "#stdio"},
-                {"include": "#system"}
-            ],
-            "repository": {
-                "screencontrols": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(bmpsave|color|dialog|font|mes|print|picload|screen|sysfont|text|title|width|winobj|pos)\\b"
-                        }
-                    ]
-                },
-                "drawfunctions": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(buffer|gsel|gmode|gsquare|gcopy|circle|boxf|redraw|gzoom)\\b"
-                        }
-                    ]
-                },
-                "objectcontrols": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(button|chkbox|clrobj|combox|input|listbox|mesbox|objenable|objimage|objmode|objprm|objsel|objskip|objsize)\\b"
-                        }
-                    ]
-                },
-                "fileoperations": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(chdir|dirlist|exist|memfile|mkdir)\\b"
-                        }
-                    ]
-                },
-                "stringoperations": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(getstr|split|notesel|notesave|noteload|noteget|noteadd|notedel|getpath|instr|strf|strmid|strtrim)\\b"
-                        }
-                    ]
-                },
-                "programcontrols": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(exec|onclick|oncmd|onexit|onkey)\\b"
-                        }
-                    ]
-                },
-                "memoryhandling": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(dim|memexpand|memset|sdim|memcopy)\\b"
-                        }
-                    ]
-                },
-                "multimediacontrols": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(mci)\\b"
-                        }
-                    ]
-                },
-                "stdiocontrols": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(mouse)\\b"
-                        }
-                    ]
-                },
-                "stdio": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(dirinfo|gettime|ginfo|int|objinfo|rnd|str|strlen|sysinfo)\\b"
-                        }
-                    ]
-                },
-                "system": {
-                    "patterns": [
-                        {
-                            "name": "support.function",
-                            "match": "\\b(mousew)\\b"
-                        }
-                    ]
-                }
-            }
-
-        },
-        "parameters": {
-            "patterns": [
-                {
-                    "include": "#numeric"
-                },
-                {
-                    "include": "#strings"
-                }
-            ],
-            "repository": {
-                "numeric": {
-                    "patterns": [
-                        {
-                            "name": "constant.numeric",
-                            "match": "\\b-?[0-9]+\\b"
-                        }
-                    ]
-                },
-                "strings": {
-                    "name": "string.quoted.double.hsp",
-                    "begin": "\"",
-                    "end": "\"",
-                    "patterns": [
-                        {
-                            "name": "constant.character.escape.hsp",
-                            "match": "\\\\."
-                        }
-                    ]
-                }
-            }
-        },
-        "labels": {
-            "patterns": [
-                {
-                    "name": "entity.name.class",
-                    "match": "\\*\\w+\\b"
+                    "match": "(+):(.+)",
+                    "captures": {
+                        "1": {"patterns": [{"include": "#comments"}, {"include": "#code"}]},
+                        "2": {"patterns": [{"include": "#comments"}, {"include": "#code"}]}
+                    }
                 }
             ]
         },
@@ -231,7 +57,143 @@
                     ]
                 }
             }
+        },
+        "code": {
+            "patterns": [
+                {
+                    "include": "#comments"
+                },
+                {
+                    "include": "#preprocessors"
+                },
+                {
+                    "include": "#keywords"
+                },
+                {
+                    "include": "#types"
+                },
+                {
+                    "include": "#statement"
+                },
+                {
+                    "include": "#parameters"
+                },
+                {
+                    "include": "#labels"
+                }
+            ],
+            "repository": {
+                "preprocessors": {
+                    "patterns": [
+                        {
+                            "name": "meta.preprocessor",
+                            "match": "\\#[\\w]+"
+                        }
+                    ]
+                },
+                "keywords": {
+                    "patterns": [{
+                        "name": "keyword.control.hsp",
+                        "match": "\\b(if|else|while|for|return|repeat|loop|goto|gosub)\\b"
+                    }]
+                },
+                "types": {
+                    "patterns": [
+                        {
+                            "name": "support.type.hsp",
+                            "match": "\\b(int|str)\\b"
+                        }
+                    ]
+                },
+                "statement": {
+                    "patterns": [
+                        {
+                            "include": "#comments"
+                        },
+                        {
+                            "include": "#multistatement"
+                        },
+                        {
+                            "include": "#singlestatement"
+                        },
+                        {
+                            "include": "#colons"
+                        }
+                    ],
+                    "repository": {
+                        "singlestatement": {
+                            "patterns": [
+                                {
+                                    "name": "support.function",
+                                    "match": "\\b\\w+\\b"
+                                }
+                            ]
+                        },
+                        "multistatement": {
+                            "patterns": [
+                                {
+                                    "match": "(\\w+)\\s+(.+)",
+                                    "captures": {
+                                        "1": { "patterns": [{"name": "support.function"}] },
+                                        "2": { "patterns": [{"include": "#parameters"}, {"include": "#comments"}] }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                "parameters": {
+                    "patterns": [
+                        {
+                            "include": "#numeric"
+                        },
+                        {
+                            "include": "#strings"
+                        },
+                        {
+                            "include": "#variables"
+                        }
+                    ],
+                    "repository": {
+                        "numeric": {
+                            "patterns": [
+                                {
+                                    "name": "constant.numeric",
+                                    "match": "\\b-?[0-9]+\\b"
+                                }
+                            ]
+                        },
+                        "strings": {
+                            "name": "string.quoted.double.hsp",
+                            "begin": "\"",
+                            "end": "\"",
+                            "patterns": [
+                                {
+                                    "name": "constant.character.escape.hsp",
+                                    "match": "\\\\."
+                                }
+                            ]
+                        },
+                        "variables": {
+                            "patterns": [
+                                {
+                                    "name": "variable.parameter",
+                                    "match": "\\b[a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff][0-9a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff]*"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "labels": {
+                    "patterns": [
+                        {
+                            "name": "entity.name.class",
+                            "match": "\\*\\w+\\b"
+                        }
+                    ]
+                }
+            }
         }
-	},
+    },
 	"scopeName": "source.hsp"
 }
