@@ -2,62 +2,9 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
     "name": "HSP",
     "patterns": [
-        { "include": "#comments"},
         { "include": "#code" }
     ],
     "repository": {
-        "colons": {
-            "patterns": [
-                { "include": "#comments" },
-                {
-                    "match": "(+):(.+)",
-                    "captures": {
-                        "1": {"patterns": [{"include": "#comments"}, {"include": "#code"}]},
-                        "2": {"patterns": [{"include": "#comments"}, {"include": "#code"}]}
-                    }
-                }
-            ]
-        },
-        "comments":{
-            "patterns": [
-                {
-                    "include": "#semicoloncomment"
-                },
-                {
-                    "include": "#doubleslashcomment"
-                },
-                {
-                    "include": "#blockcomment"
-                }
-            ],
-            "repository": {
-                "semicoloncomment": {
-                    "patterns": [
-                        {
-                            "name": "comment.line",
-                            "match": ";.*"
-                        }
-                    ]
-                },
-                "doubleslashcomment": {
-                    "patterns": [
-                        {
-                            "name": "comment.line.double-slash",
-                            "match": "//.*"
-                        }
-                    ]
-                },
-                "blockcomment": {
-                    "patterns": [
-                        {
-                            "name": "comment.block",
-                            "begin": "/\\*",
-                            "end": "\\*/"
-                        }
-                    ]
-                }
-            }
-        },
         "code": {
             "patterns": [
                 {
@@ -74,9 +21,6 @@
                 },
                 {
                     "include": "#statement"
-                },
-                {
-                    "include": "#parameters"
                 },
                 {
                     "include": "#labels"
@@ -115,14 +59,15 @@
                         },
                         {
                             "include": "#singlestatement"
-                        },
-                        {
-                            "include": "#colons"
                         }
                     ],
                     "repository": {
                         "singlestatement": {
                             "patterns": [
+                                {
+                                    "name": "support.function",
+                                    "match": "\\b:\\b\\s*\\w+"
+                                },
                                 {
                                     "name": "support.function",
                                     "match": "\\b\\w+\\b"
@@ -132,7 +77,14 @@
                         "multistatement": {
                             "patterns": [
                                 {
-                                    "match": "(\\w+)\\s+(.+)",
+                                    "match": "\\b:\\b\\s*(\\w+)\\s+(\\S+)",
+                                    "captures": {
+                                        "1": { "patterns": [{"name": "support.function"}] },
+                                        "2": { "patterns": [{"include": "#parameters"}, {"include": "#comments"}] }
+                                    }
+                                },
+                                {
+                                    "match": "\\<(\\w+)\\s+(\\S+)",
                                     "captures": {
                                         "1": { "patterns": [{"name": "support.function"}] },
                                         "2": { "patterns": [{"include": "#parameters"}, {"include": "#comments"}] }
@@ -178,7 +130,7 @@
                             "patterns": [
                                 {
                                     "name": "variable.parameter",
-                                    "match": "\\b[a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff][0-9a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff]*"
+                                    "match": "\\b[a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff][0-9a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff]*\\b"
                                 }
                             ]
                         }
@@ -191,6 +143,46 @@
                             "match": "\\*\\w+\\b"
                         }
                     ]
+                },
+                "comments":{
+                    "patterns": [
+                        {
+                            "include": "#semicoloncomment"
+                        },
+                        {
+                            "include": "#doubleslashcomment"
+                        },
+                        {
+                            "include": "#blockcomment"
+                        }
+                    ],
+                    "repository": {
+                        "semicoloncomment": {
+                            "patterns": [
+                                {
+                                    "name": "comment.line",
+                                    "match": ";.*"
+                                }
+                            ]
+                        },
+                        "doubleslashcomment": {
+                            "patterns": [
+                                {
+                                    "name": "comment.line.double-slash",
+                                    "match": "//.*"
+                                }
+                            ]
+                        },
+                        "blockcomment": {
+                            "patterns": [
+                                {
+                                    "name": "comment.block",
+                                    "begin": "/\\*",
+                                    "end": "\\*/"
+                                }
+                            ]
+                        }
+                    }
                 }
             }
         }
