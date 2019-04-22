@@ -11,7 +11,7 @@ For Visual Studio Code Users.
 ## Extension Installation
 
 Go to the Extension Tab on your VS Code.  
-Then Select "Install from VSIX files", and Install ~hsp-syntax-highlight-0.0.1.vsix~.
+Then Select "Install from VSIX files", and Install `hsp-syntax-highlight-0.0.1.vsix`.
 
 ## Known Issues
 
