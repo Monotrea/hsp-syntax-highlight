@@ -3,26 +3,23 @@
 ## Features
 
 This is a syntax-highlight extension for HSP.  
-It is under construction...
 
 ## Requirements
 
-Just install this extension.
+For Visual Studio Code Users.
 
-## Extension Settings
+## Extension Installation
 
-None.
+Go to the Extension Tab on your VS Code.  
+Then Select "Install from VSIX files", and Install ~hsp-syntax-highlight-0.0.1.vsix~.
 
 ## Known Issues
 
-Unable to give you appropriate syntax highlights...  
-For Example,  
-- `/* Comments */` highlight not work well  
-- `:` for multistatement works, but `:` in strings doesn't work.
+None. If you find, please create an issue.
 
 ## Release Notes
 
 ### 0.01
 
-Not released.
+Standard Syntax Highlight function for .hsp files.
 
