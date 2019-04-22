@@ -2,7 +2,7 @@
 
 ## Features
 
-This is a syntax-highlight extension for HSP.  
+This is a simple syntax-highlight extension for HSP.  
 
 ## Requirements
 
