@@ -41,7 +41,7 @@
                 "insertions": {
                     "patterns": [
                         {
-                            "match": "^\\s*([a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff][0-9a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff]+)\\s*=",
+                            "match": "^\\s*([a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff][0-9a-zA-z\u3040-\u31ff\u3400-\u9fff\uf900-\ufaff]+)\\s*(=|\\+\\+|\\-\\-)",
                             "captures": {"1": {"name": "variable.parameter"}}
                         },
                         {
@@ -67,6 +67,9 @@
                 "parameters": {
                     "patterns": [
                         {
+                            "include": "#special_vals"
+                        },
+                        {
                             "include": "#numeric"
                         },
                         {
@@ -81,7 +84,15 @@
                             "patterns": [
                                 {
                                     "name": "constant.numeric",
-                                    "match": "\\b-?[0-9]+\\b"
+                                    "match": "-?[0-9]+"
+                                }
+                            ]
+                        },
+                        "special_vals": {
+                            "patterns": [
+                                {
+                                    "name": "constant.other",
+                                    "match": "%[0-9]+"
                                 }
                             ]
                         },
